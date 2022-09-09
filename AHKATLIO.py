@@ -1136,7 +1136,7 @@ class Parser:
       False
     ))
 
-  ###################################
+  
 
   def bin_op(self, func_a, ops, func_b=None):
     if func_b == None:
@@ -1156,10 +1156,7 @@ class Parser:
 
     return res.success(left)
 
-#######################################
-# RUNTIME RESULT
-#######################################
-
+#RUNTIME_RESULT
 class RTResult:
   def __init__(self):
     self.reset()
@@ -1204,7 +1201,6 @@ class RTResult:
     return self
 
   def should_return(self):
-    # Note: this will allow you to continue and break outside the current function
     return (
       self.error or
       self.func_return_value or
@@ -1212,10 +1208,7 @@ class RTResult:
       self.loop_should_break
     )
 
-#######################################
-# VALUES
-#######################################
-
+#VALUES
 class Value:
   def __init__(self):
     self.set_pos()
@@ -1595,7 +1588,6 @@ class BuiltInFunction(BaseFunction):
   def __repr__(self):
     return f"<built-in function {self.name}>"
 
-  #####################################
 
   def execute_print(self, exec_ctx):
     print(str(exec_ctx.symbol_table.get('value')))
@@ -1776,10 +1768,7 @@ BuiltInFunction.extend      = BuiltInFunction("extend")
 BuiltInFunction.len					= BuiltInFunction("len")
 BuiltInFunction.run					= BuiltInFunction("run")
 
-#######################################
-# CONTEXT
-#######################################
-
+#CONTEXT
 class Context:
   def __init__(self, display_name, parent=None, parent_entry_pos=None):
     self.display_name = display_name
@@ -1787,10 +1776,7 @@ class Context:
     self.parent_entry_pos = parent_entry_pos
     self.symbol_table = None
 
-#######################################
-# SYMBOL TABLE
-#######################################
-
+#SYMBOL TABLE
 class SymbolTable:
   def __init__(self, parent=None):
     self.symbols = {}
@@ -1808,10 +1794,7 @@ class SymbolTable:
   def remove(self, name):
     del self.symbols[name]
 
-#######################################
-# INTERPRETER
-#######################################
-
+#INTERPRETER
 class Interpreter:
   def visit(self, node, context):
     method_name = f'visit_{type(node).__name__}'
@@ -1821,7 +1804,6 @@ class Interpreter:
   def no_visit_method(self, node, context):
     raise Exception(f'No visit_{type(node).__name__} method defined')
 
-  ###################################
 
   def visit_NumberNode(self, node, context):
     return RTResult().success(
@@ -2062,10 +2044,7 @@ class Interpreter:
   def visit_BreakNode(self, node, context):
     return RTResult().success_break()
 
-#######################################
-# RUN
-#######################################
-
+#RUN
 global_symbol_table = SymbolTable()
 global_symbol_table.set("NULL", Number.null)
 global_symbol_table.set("FALSE", Number.false)
